@@ -1,24 +1,24 @@
-# Tabletop Vendor Payment Aggregator
+# SariSariSettle
 
-A real-time cashier POS terminal that consolidates multiple digital payments into a single, audited on-chain USDC balance via SEP-7 payment URIs.
+A blockchain-powered POS terminal for Philippine sari-sari stores. Accept multiple payment methods, settle to USDC instantly, and reconcile on-chain with one click.
 
 ## Problem
 
-In the Philippines, weekend bazaars and pop-up food markets are booming, but micro-vendors face a daily reconciliation nightmare. Merchants accept GCash, Maya, cash, and bank transfers simultaneously, then spend hours at day's end cross-referencing:
-- Cash drawers (manual, error-prone)
-- Bank statements (1–2 day settlement lag)
-- GCash SMS logs (easy to lose, screenshots can be faked)
-- Maya reference numbers (scattered across devices)
+In the Philippines, **sari-sari stores** (small neighborhood convenience stores) are the backbone of retail commerce. During peak hours, owners accept GCash, Maya, cash, and bank transfers simultaneously. But at day's end, reconciliation becomes a nightmare:
+- Cash drawers (manual counting, easy to miscount)
+- GCash transaction logs (scattered, easy to lose)
+- Maya reference numbers (manually tracked across devices)
+- Bank transfer records (delayed settlement)
 
-**Result:** Lost transactions, reconciliation errors, unexplained discrepancies, and direct financial losses.
+**Result:** Reconciliation takes 2–3 hours, frequent discrepancies, and lost transaction records.
 
 ## How It Works
 
-1. **Cashier enters a sale** → Types PHP amount + product memo (e.g., "Caramel Macchiato") into a POS keypad
-2. **QR code appears** → Standee display generates a Stellar Payment URI (SEP-7) with auto-calculated USDC amount
-3. **Customer scans & pays** → Using Freighter wallet, customer chooses **Direct USDC** or **XLM Path Payment** (auto-swap)
-4. **Real-time confirmation** → Terminal polls Horizon every 3 seconds; when transaction lands, flashes **"PAYMENT CONFIRMED! 🎉"**
-5. **Auto-reconciliation** → All transactions recorded with on-chain memos; one-click CSV export for daily bookkeeping
+1. **Cashier rings up a sale** → Uses an interactive numeric POS keypad to enter the transaction amount in PHP and product description (e.g., "Instant Noodles x2")
+2. **QR code displays on standee** → A stunning tabletop terminal generates a Stellar Payment URI (SEP-7) with auto-calculated USDC equivalent
+3. **Customer scans & pays** → Customer opens Freighter wallet, scans QR, and chooses to pay in **direct USDC** or **XLM with auto-swap**
+4. **Instant settlement** → Payment hits the blockchain in 3–5 seconds; terminal flashes green **"PAYMENT CONFIRMED! 🎉"** and auto-records the transaction
+5. **End-of-day reconciliation** → One-click CSV export gives the owner an itemized, on-chain verified sales ledger ready for bookkeeping
 
 ## How It Uses Stellar
 
@@ -73,14 +73,14 @@ No custom env vars needed — all Testnet defaults are baked in:
 
 ## Demo Flow
 
-1. **Connect Freighter** — Link your Test Net wallet
-2. **Fund via Friendbot** — Receive 10,000 XLM (first-time only)
-3. **Add USDC Trustline** — Register the asset on your address
-4. **POS Entry** — Type a PHP amount (e.g., `150`) + item memo (e.g., `"Flat White"`)
-5. **Generate QR** — Standee locks in invoice and displays scannable URI
-6. **Customer Payment** — Choose **Direct USDC** or **XLM (Swap)** in the simulator; sign in Freighter
-7. **Instant Confirmation** — Within 3–5 seconds, terminal flashes green and records the transaction
-8. **Export CSV** — Download itemized sales ledger with memo tags and PHP valuations
+1. **Connect Freighter** — Link your Test Net wallet (vendor account)
+2. **Fund via Friendbot** — Receive 10,000 XLM for testing (first-time only)
+3. **Add USDC Trustline** — Register the USDC asset on your address (one transaction, ~3 seconds)
+4. **POS Entry** — Open the **Interactive Numeric Keypad**, type a PHP amount (e.g., `250` for a typical sari-sari sale), and add a product memo (e.g., `"Calamansi x12"`)
+5. **Generate QR** — Click "Generate QR Code" → The **Tabletop Standee** locks in the invoice and displays a scannable Stellar Payment URI
+6. **Customer Payment** — In the **Payment Simulator** panel, choose **Direct USDC** or **XLM (Auto-Swap)**; tap "Confirm & Sign"; approve in Freighter
+7. **Instant Confirmation** — Within 3–5 seconds, the **Standee flashes green** and displays **"PAYMENT CONFIRMED! 🎉"**; the **Sales Ledger** auto-updates below
+8. **Export CSV** — Click "Export Sales Ledger (.CSV)" → Download a clean, audited reconciliation report with timestamps, memos, amounts, and PHP valuations
 
 ## Network Details
 
