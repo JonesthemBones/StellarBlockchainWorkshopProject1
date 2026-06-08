@@ -107,8 +107,29 @@ No custom env vars needed — all Testnet defaults are baked in:
 
 ## Team
 
-- **Jones** — @JonesthemBones
+- **Johnmel Villarosa Rojas** — @JonesthemBones
 
 ## License
 
 MIT
+
+---
+
+## 🚨 A Desperate Plea From the Developer
+
+**IMPORTANT:** This project was entirely **vibecoded**. I had absolutely no idea what I was doing at 2 AM on a Monday, armed only with an overwhelming sense of urgency, three espressos, and a vague understanding of what "Stellar" means. 
+
+If this somehow works:
+- 🎉 Thank the Stellar gods
+- 🙏 Please don't ask me to explain the Path Payment logic (I honestly still don't know)
+- 📖 The documentation is 60% vibes, 40% actual code
+- 🆘 If it breaks, simply restart your computer and whisper "Path Payment" three times
+
+If this doesn't work:
+- 😅 Yeah... that's fair
+- 🔧 Try `rm -rf node_modules && npm install` (turns out that fixes like 90% of problems)
+- 💬 Open an issue and title it "HELP: vibe check failed"
+
+**Real talk:** Despite the chaos, this thing actually runs and settles payments on Stellar Testnet. So either I accidentally did something right, or the blockchain is more forgiving than I thought. 🤷
+
+*— Johnmel, 2 AM, surrounded by cold coffee and regret*
