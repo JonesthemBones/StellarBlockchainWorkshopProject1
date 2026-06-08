@@ -8,7 +8,9 @@ export const RPC_URL =
   process.env.NEXT_PUBLIC_SOROBAN_RPC ?? 'https://soroban-testnet.stellar.org';
 export const HORIZON_URL =
   process.env.NEXT_PUBLIC_HORIZON_URL ?? 'https://horizon-testnet.stellar.org';
-export const USDC_ISSUER = process.env.NEXT_PUBLIC_USDC_ISSUER ?? '';
+export const USDC_ISSUER =
+  process.env.NEXT_PUBLIC_USDC_ISSUER ||
+  'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5';
 export const CONTRACT_ID = process.env.NEXT_PUBLIC_CONTRACT_ID ?? '';
 
 // v15 SDK: use the `rpc` namespace (the old `SorobanRpc` namespace is gone).

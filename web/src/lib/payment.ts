@@ -3,6 +3,7 @@ import {
   Operation,
   Asset,
   BASE_FEE,
+  Memo,
 } from '@stellar/stellar-sdk';
 import { server, NETWORK_PASSPHRASE, USDC_ISSUER } from './stellar';
 
@@ -14,6 +15,7 @@ export async function buildPaymentXDR(
   destination: string,
   amount: string,
   assetCode: AssetCode,
+  memoText?: string,
 ): Promise<string> {
   const asset =
     assetCode === 'XLM' ? Asset.native() : new Asset('USDC', USDC_ISSUER);
@@ -21,11 +23,58 @@ export async function buildPaymentXDR(
   // Always load the account fresh so we have the current sequence number.
   const account = await server.getAccount(sender);
 
-  const tx = new TransactionBuilder(account, {
+  const builder = new TransactionBuilder(account, {
     fee: BASE_FEE,
     networkPassphrase: NETWORK_PASSPHRASE,
-  })
+  });
+
+  if (memoText) {
+    builder.addMemo(Memo.text(memoText.slice(0, 28))); // Memo text has a 28-byte limit
+  }
+
+  const tx = builder
     .addOperation(Operation.payment({ destination, asset, amount }))
+    .setTimeout(60)
+    .build();
+
+  return tx.toXDR();
+}
+
+/** Build an unsigned Path Payment transaction (XLM -> USDC) and return its XDR. */
+export async function buildPathPaymentXDR(
+  sender: string,
+  destination: string,
+  destAmount: string,
+  sendMax: string,
+  memoText?: string,
+): Promise<string> {
+  if (!USDC_ISSUER) throw new Error('USDC issuer is not configured');
+
+  const sendAsset = Asset.native();
+  const destAsset = new Asset('USDC', USDC_ISSUER);
+
+  const account = await server.getAccount(sender);
+
+  const builder = new TransactionBuilder(account, {
+    fee: BASE_FEE,
+    networkPassphrase: NETWORK_PASSPHRASE,
+  });
+
+  if (memoText) {
+    builder.addMemo(Memo.text(memoText.slice(0, 28))); // Memo text has a 28-byte limit
+  }
+
+  const tx = builder
+    .addOperation(
+      Operation.pathPaymentStrictReceive({
+        sendAsset,
+        sendMax,
+        destination,
+        destAsset,
+        destAmount,
+        path: [], // Direct XLM -> USDC conversion on DEX
+      })
+    )
     .setTimeout(60)
     .build();
 
